@@ -18,7 +18,7 @@ Obsidian-style live markdown editor. Click any line to edit its raw markdown inl
 ## Install
 
 ```bash
-npm install @your-scope/markdown-editor
+npm install @bhaswanth53/markdown-editor
 ```
 
 > Peer dependencies — install these alongside the editor:
@@ -29,8 +29,8 @@ npm install @your-scope/markdown-editor
 ## Quick start
 
 ```js
-import { MarkdownEditor } from '@your-scope/markdown-editor';
-import '@your-scope/markdown-editor/dist/style.css';
+import { MarkdownEditor } from '@bhaswanth53/markdown-editor';
+import '@bhaswanth53/markdown-editor/dist/style.css';
 
 const editor = new MarkdownEditor('#my-div', {
   placeholder:   'Start writing…',

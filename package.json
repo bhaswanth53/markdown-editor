@@ -1,6 +1,6 @@
 {
-  "name": "@your-scope/markdown-editor",
-  "version": "1.0.0",
+  "name": "@bhaswanth53/markdown-editor",
+  "version": "0.1.0",
   "description": "Obsidian-style live markdown editor — inline editing, editable code blocks, image paste",
   "type": "module",
   "main": "./dist/markdown-editor.umd.js",
