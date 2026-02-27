@@ -1,0 +1,33 @@
+{
+  "name": "@your-scope/markdown-editor",
+  "version": "1.0.0",
+  "description": "Obsidian-style live markdown editor — inline editing, editable code blocks, image paste",
+  "type": "module",
+  "main": "./dist/markdown-editor.umd.js",
+  "module": "./dist/markdown-editor.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/markdown-editor.es.js",
+      "require": "./dist/markdown-editor.umd.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite demo",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "highlight.js": "^11.9.0",
+    "marked": "^9.1.6"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "keywords": ["markdown", "editor", "obsidian", "live-preview", "contenteditable"],
+  "license": "MIT"
+}

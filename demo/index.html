@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Editor — Dev Demo</title>
+
+  <!-- Google Fonts (optional — editor falls back gracefully) -->
+  <link href="//fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Editor styles (Vite resolves this from src/style.css during dev) -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/src/style.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f4f3ee;
+      color: #1a1a1a;
+    }
+    .page { max-width: 900px; margin: 36px auto; padding: 0 20px 80px; }
+    .page > h1 {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 24px; font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .page > p  { font-size: 13px; color: #6b6860; margin-bottom: 28px; }
+    .section   { margin-bottom: 36px; }
+    .label     { font-size: 11px; font-weight: 600; color: #6b6860; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+
+    /* Output preview panel */
+    .output {
+      margin-top: 12px; padding: 16px;
+      background: #fff; border: 1px solid #dddbd0;
+      border-radius: 6px; font-size: 13px;
+      color: #6b6860; font-family: 'JetBrains Mono', monospace;
+      white-space: pre-wrap; max-height: 200px; overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>✦ Markdown Editor — Dev Demo</h1>
+  <p>Edit live below. The output pane shows the HTML <code>getValue()</code> returns on every change.</p>
+
+  <div class="section">
+    <div class="label">Editor 1</div>
+    <div id="editor1" style="height: 520px"></div>
+    <!-- Auto-synced hidden input -->
+    <input type="hidden" id="content1">
+  </div>
+
+  <div class="section">
+    <div class="label">HTML Output (getValue)</div>
+    <div class="output" id="output1"></div>
+  </div>
+
+  <div class="section">
+    <div class="label">Editor 2 (independent instance)</div>
+    <div id="editor2" style="height: 280px"></div>
+  </div>
+</div>
+
+<script type="module">
+  import { MarkdownEditor } from '../dist/markdown-editor.es.js';
+  // import '../src/style.css';
+
+  const DEMO = `# Welcome to the Editor
+
+This is an **Obsidian-style** live markdown editor. Click any line to edit its raw markdown, click away to render it.
+
+## Code blocks stay as code blocks
+
+Click directly inside the block below — it stays styled while you type.
+
+\`\`\`javascript
+function debounce(fn, delay) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
+\`\`\`
+
+## Python example
+
+\`\`\`python
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+\`\`\`
+
+## Inline formatting
+
+Write **bold**, *italic*, ~~strikethrough~~, \`inline code\`, and [links](https://example.com).
+
+> Blockquotes work great for callouts.
+
+---
+
+Type **/** on an empty line for the insert menu. **Ctrl+B** / **Ctrl+I** for quick formatting.`;
+
+  // ── Editor 1 ──────────────────────────────────────────────────────
+  const editor1 = new MarkdownEditor('#editor1', {
+    placeholder: 'Start writing…',
+    initialValue: DEMO,
+  });
+  editor1.init();
+
+  const output = document.getElementById('output1');
+  editor1.on('change', (html) => {
+    output.textContent = html;
+  });
+  editor1.on('save', (html, md) => {
+    console.log('[editor1] saved — words:', md.split(/\s+/).length);
+  });
+
+  // ── Editor 2 ──────────────────────────────────────────────────────
+  const editor2 = new MarkdownEditor('#editor2', {
+    placeholder: 'Second independent editor…',
+    initialValue: '## Quick Note\n\nEach editor has its own independent state.\n\n```bash\nnpm install\nnpm run dev\n```',
+  });
+  editor2.init();
+
+  // Expose globally for console experimentation
+  window.editor1 = editor1;
+  window.editor2 = editor2;
+</script>
+</body>
+</html>
