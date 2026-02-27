@@ -1,3 +1,5 @@
+import './style.css'
+
 // Main editor class
 export { MarkdownEditor } from './MarkdownEditor.js';
 
